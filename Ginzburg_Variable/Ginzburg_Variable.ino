@@ -21,8 +21,9 @@ uint16_t color565(uint8_t r, uint8_t g, uint8_t b) { return ((r & 0xF8) << 8) | 
 float b_start, b_end;
 float c_start, c_end;
 
-#define GRID_W 4
-#define GRID_H 3
+#define GRID_W 3
+#define GRID_H 4
+
 float grid_b[GRID_W][GRID_H];
 float grid_c[GRID_W][GRID_H];
 
