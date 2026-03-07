@@ -87,7 +87,7 @@ void rndrule() {
         }
     }
     
-    levels = 8;
+    levels = 7;
     blurFactor = 0.7f;
 
 }
