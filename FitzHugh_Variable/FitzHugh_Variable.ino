@@ -6,8 +6,8 @@
 #define HEIGHT  240
 #define SCR     (WIDTH*HEIGHT)
 
-#define FOCUS_COLS 4
-#define FOCUS_ROWS 3
+#define FOCUS_COLS 3
+#define FOCUS_ROWS 4
 #define NUM_FOCUSES (FOCUS_COLS * FOCUS_ROWS)
 
 struct Focus {
