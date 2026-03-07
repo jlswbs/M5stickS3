@@ -181,7 +181,8 @@ void setup(){
     diffRateUXarr = (float*)ps_malloc(4*SCR);
     farr = (float*)ps_malloc(4*SCR);
     karr = (float*)ps_malloc(4*SCR);
-    frameBuffer = (uint16_t*)malloc(SCR * sizeof(uint16_t));
+    
+    frameBuffer = (uint16_t*)heap_caps_malloc(SCR * sizeof(uint16_t), MALLOC_CAP_DMA | MALLOC_CAP_INTERNAL);
 
     rndseed();
 
