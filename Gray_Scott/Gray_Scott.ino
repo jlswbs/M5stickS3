@@ -1,4 +1,4 @@
-// Gray-Scott reaction diffusion - SIMD ESP32-S3 //
+// 2D Gray-Scott reaction diffusion - SIMD ESP32-S3 //
 
 #include "M5Unified.h"
 
@@ -7,12 +7,17 @@
 #define SCR     (WIDTH * HEIGHT)
 
 float randomf(float minf, float maxf) { return minf + (esp_random() % (1UL << 31)) * (maxf - minf) / (1UL << 31); }
+uint16_t color565(uint8_t r, uint8_t g, uint8_t b) { return ((r & 0xF8) << 8) | ((g & 0xFC) << 3) | (b >> 3); }
+
+uint16_t grayLUT[256];
 
 uint16_t* frameBuffer;
 float diffU = 0.16f, diffV = 0.08f, paramF = 0.035f, paramK = 0.06f;
 float *gridU, *gridV;
 
 void rndseed() {
+
+    for (int i = 0; i < 256; i++) grayLUT[i] = color565(i, i, i);
 
     diffU = randomf(0.0999f, 0.1999f);
     diffV = randomf(0.0749f, 0.0849f);
@@ -115,12 +120,7 @@ void loop() {
 
     for (int k = 0; k < 20; k++) timestep(paramF, paramK, diffU, diffV);
 
-    float* pU = gridU;
-    uint16_t* pFB = frameBuffer;
-    for (int i = 0; i < SCR; i++) {
-        uint8_t coll = (uint8_t)(255.0f * (*pU++));
-        *pFB++ = ((coll & 0xF8) << 8) | ((coll & 0xFC) << 3) | (coll >> 3);
-    }
+    for (int i = 0; i < SCR; i++) { frameBuffer[i] = grayLUT[(uint8_t)(gridU[i] * 255.0f)]; }
 
     M5.Display.waitDMA();
     M5.Display.pushImageDMA(0, 0, WIDTH, HEIGHT, frameBuffer);
