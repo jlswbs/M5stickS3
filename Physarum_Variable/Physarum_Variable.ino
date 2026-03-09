@@ -14,8 +14,8 @@
 #define AGENTS_PER_SPECIES 2500
 #define TOTAL_AGENTS (NUM_SPECIES * AGENTS_PER_SPECIES)
 #define MOVE_SPEED 1.0f
-#define DEPOSIT_AMOUNT 50.0f
-#define DECAY_RATE 0.965f
+#define DEPOSIT_AMOUNT 60.0f
+#define DECAY_RATE 0.97f
 
 struct Focus {
     float x, y;
@@ -161,7 +161,8 @@ void setup() {
     pixelRS = (float *)ps_malloc(SCR * sizeof(float));
     coll = (uint16_t *)ps_malloc(NUM_SPECIES * sizeof(uint16_t));
     agents = (Agent *)ps_malloc(TOTAL_AGENTS * sizeof(Agent));
-    frameBuffer = (uint16_t*)heap_caps_malloc(SCR * 2, MALLOC_CAP_DMA | MALLOC_CAP_INTERNAL);
+    
+    frameBuffer = (uint16_t*)heap_caps_malloc(SCR * sizeof(uint16_t), MALLOC_CAP_DMA | MALLOC_CAP_INTERNAL);
 
     rndseed();
 
