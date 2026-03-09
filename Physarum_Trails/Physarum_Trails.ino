@@ -175,7 +175,8 @@ void setup() {
   trailTemp = (float *)ps_malloc(SCR * sizeof(float));
   coll = (uint16_t *)ps_malloc(NUM_SPECIES * sizeof(uint16_t));
   agents = (Agent *)ps_malloc(TOTAL_AGENTS * sizeof(Agent));
-  frameBuffer = (uint16_t*)malloc(SCR * sizeof(uint16_t));
+  
+  frameBuffer = (uint16_t*)heap_caps_malloc(SCR * sizeof(uint16_t), MALLOC_CAP_DMA | MALLOC_CAP_INTERNAL);
 
   rndseed();
 
@@ -185,8 +186,6 @@ void loop() {
 
   M5.update();
   if(M5.BtnA.isPressed()) rndseed();
-
-  M5.Display.waitDMA();
 
   nextstep();
 
@@ -213,8 +212,7 @@ void loop() {
     }
   }
 
-  M5.Display.startWrite();
+  M5.Display.waitDMA();
   M5.Display.pushImage(0, 0, WIDTH, HEIGHT, frameBuffer);
-  M5.Display.endWrite();
 
 }
